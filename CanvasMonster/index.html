@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="nav-bar">
+        <a id="nav-git-link" href="https://github.com/CookieMonsterTelerikTeam/Canvas-Monster">Canvas Monster</a>
+    </div>
+    <div id="canvas-container">
+        <div id="container"></div>
+    </div>
+    <div id="nav-buttons">
+        <button class="btn" id="clear">Clear</button>
+    </div>
+    <script src="kinetic-v5.1.0.min.js"></script>
+    <script>
+        var stage = new Kinetic.Stage({
+            container: 'container',
+            width: 1340,
+            height: 700,
+            stroke: 10
+        });
+        var layer = new Kinetic.Layer();
+        var circle = new Kinetic.Circle({
+            x: stage.getWidth() / 2,
+            y: stage.getHeight() / 2,
+            radius: 70,
+            fill: 'red',
+            stroke: 'black',
+            strokeWidth: 4
+        });
+
+        // add the shape to the layer
+        layer.add(circle);
+
+        // add the layer to the stage
+        stage.add(layer);
+
+
+        //Clear the canvas
+        document.getElementById('clear').addEventListener('click', function () {
+            layer.clear();
+        }, false);
+
+    </script>
+
+</body>
+</html>

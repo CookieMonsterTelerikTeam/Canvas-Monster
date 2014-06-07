@@ -1,0 +1,6 @@
+F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\bin\CanvasMonster.dll.config
+F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\bin\CanvasMonster.dll
+F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\bin\CanvasMonster.pdb
+F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\obj\Debug\CanvasMonster.csprojResolveAssemblyReference.cache
+F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\obj\Debug\CanvasMonster.dll
+F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\obj\Debug\CanvasMonster.pdb
