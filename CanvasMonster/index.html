@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <link href="style.css" rel="stylesheet" />
+    <title>Canvas Monster</title>
+    <link href="styles/style.css" rel="stylesheet" />
+    <script src="libraries/kinetic-v5.1.0.min.js"></script>
 </head>
 <body>
     <div id="nav-bar">
@@ -14,7 +15,7 @@
     <div id="nav-buttons">
         <button class="btn" id="clear">Clear</button>
     </div>
-    <script src="kinetic-v5.1.0.min.js"></script>
+    
     <script>
         var stage = new Kinetic.Stage({
             container: 'container',
@@ -23,6 +24,7 @@
             stroke: 10
         });
         var layer = new Kinetic.Layer();
+
         var circle = new Kinetic.Circle({
             x: stage.getWidth() / 2,
             y: stage.getHeight() / 2,
