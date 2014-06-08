@@ -3,49 +3,34 @@
 <head>
     <title>Canvas Monster</title>
     <link href="styles/style.css" rel="stylesheet" />
-    <script src="libraries/kinetic-v5.1.0.min.js"></script>
 </head>
 <body>
     <div id="nav-bar">
         <a id="nav-git-link" href="https://github.com/CookieMonsterTelerikTeam/Canvas-Monster">Canvas Monster</a>
     </div>
     <div id="canvas-container">
-        <div id="container"></div>
+        <canvas id="the-canvas" width="1340" height="700">
+                Unfortunately, your browser is currently unsupported by our web
+                application.  We are sorry for the inconvenience. Please use one of the
+                supported browsers listed below, or draw the image you want using an
+                offline tool.
+                Supported browsers: Opera, Firefox, Safari, and Konqueror.
+        </canvas>
     </div>
     <div id="nav-buttons">
-        <button class="btn" id="clear">Clear</button>
+        <button class="btn" id="brush" onclick="toggleDraw()">Brush</button>
+        <button class="btn" id="clear" onclick="clearCanvas()">Clear</button>
+        <br />
+            <label for="color-button">Change color: </label>
+        <input type="color" id="color-button" onchange="changeColor()"/>
+        <label for="width-slider">&nbsp;&nbsp;Change width: </label>
+        <input id="width-slider" type="range" min="1" max="30" step="1" value="3" onchange="changeWidth()"/> 
+        <input id="width-value" type="text"disabled />
     </div>
-    
+
+    <script src="scripts/drawJS.js"></script>
     <script>
-        var stage = new Kinetic.Stage({
-            container: 'container',
-            width: 1340,
-            height: 700,
-            stroke: 10
-        });
-        var layer = new Kinetic.Layer();
-
-        var circle = new Kinetic.Circle({
-            x: stage.getWidth() / 2,
-            y: stage.getHeight() / 2,
-            radius: 70,
-            fill: 'red',
-            stroke: 'black',
-            strokeWidth: 4
-        });
-
-        // add the shape to the layer
-        layer.add(circle);
-
-        // add the layer to the stage
-        stage.add(layer);
-
-
-        //Clear the canvas
-        document.getElementById('clear').addEventListener('click', function () {
-            layer.clear();
-        }, false);
-
+        
     </script>
 
 </body>

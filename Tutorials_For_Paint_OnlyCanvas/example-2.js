@@ -3,7 +3,7 @@
  */
 
 // Keep everything in anonymous function, called on window load.
-if(window.addEventListener) {
+if (window.addEventListener) {
 window.addEventListener('load', function () {
   var canvas, context, tool;
 
@@ -71,20 +71,23 @@ window.addEventListener('load', function () {
 
   // The general-purpose event handler. This function just determines the mouse 
   // position relative to the canvas element.
-  function ev_canvas (ev) {
-    if (ev.layerX || ev.layerX == 0) { // Firefox
-      ev._x = ev.layerX;
-      ev._y = ev.layerY;
-    } else if (ev.offsetX || ev.offsetX == 0) { // Opera
-      ev._x = ev.offsetX;
-      ev._y = ev.offsetY;
-    }
+  function ev_canvas(ev) {
+      ev._x = ev.pageX - this.offsetLeft;
+      ev._y = ev.pageY - this.offsetTop;
+      
+    //if (ev.layerX || ev.layerX == 0) { // Firefox
+    //  ev._x = ev.layerX;
+    //  ev._y = ev.layerY;
+    //} else if (ev.offsetX || ev.offsetX == 0) { // Opera
+    //  ev._x = ev.offsetX;
+    //  ev._y = ev.offsetY;
+    //}
 
-    // Call the event handler of the tool.
-    var func = tool[ev.type];
-    if (func) {
-      func(ev);
-    }
+    //// Call the event handler of the tool.
+    //var func = tool[ev.type];
+    //if (func) {
+    //  func(ev);
+    //}
   }
 
   init();

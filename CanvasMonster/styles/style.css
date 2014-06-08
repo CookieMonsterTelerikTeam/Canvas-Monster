@@ -1,64 +1,79 @@
-﻿#nav-bar {
-    height: 93px;
-
-    background-color: yellowgreen;
-    text-align:center;
-    vertical-align:middle;
+﻿body{
+    font-family:'Segoe UI';
 }
 
-#nav-git-link{
+#nav-bar {
+    height: 93px;
+    background-color: yellowgreen;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#nav-git-link {
     display: inline-block;
     margin: 5px;
-
-    color:white;
-    font-family:'Segoe UI';
-    text-decoration:none;
-    font-size:4em;
+    color: white;
+    font-family: 'Segoe UI';
+    text-decoration: none;
+    font-size: 4em;
 }
 
-#nav-git-link:hover{
-    font-family:'Segoe UI';
-    text-decoration:none;
-    color:beige;
+    #nav-git-link:hover {
+        font-family: 'Segoe UI';
+        text-decoration: none;
+        color: beige;
+    }
+
+#canvas-container {
+    margin: 0 auto;
+    width: 1340px;
+    height: 700px;
+    margin-top: 10px;
+    border: solid;
+    border-color: yellowgreen;
+    border-width: 2px;
 }
 
-#canvas-container{
-    margin:0 auto;
-    width:1340px;
-    height:700px;
-    margin-top:10px;
-    border:solid;
-    border-color:yellowgreen;
-    border-width:2px;
-}
-
-.btn{
-  background: white;
-  background-image: -webkit-linear-gradient(top, white, white);
-  background-image: -moz-linear-gradient(top, white, white);
-  background-image: -ms-linear-gradient(top, white, white);
-  background-image: -o-linear-gradient(top, white, white);
-  background-image: linear-gradient(to bottom, white, white);
-  -webkit-border-radius: 7;
-  -moz-border-radius: 7;
-  border-radius: 7px;
-  font-family: Arial;
-  color: yellowgreen;
-  font-size: 19px;
-  padding: 10px 20px 10px 20px;
-  border: solid yellowgreen 2px;
-  text-decoration: none;
-}
-
-.btn:hover {
-  background: yellowgreen;
-  color:white;
-  text-decoration: none;
-}
-
-#nav-buttons{
-    margin:0 auto;
-    width:1340px;
-    height:40px;
+#width-value {
+    width: 30px;
+    height:30px;
+    font-size:20px;
     text-align:center;
+}
+
+.btn {
+    background: white;
+    background-image: -webkit-linear-gradient(top, white, white);
+    background-image: -moz-linear-gradient(top, white, white);
+    background-image: -ms-linear-gradient(top, white, white);
+    background-image: -o-linear-gradient(top, white, white);
+    background-image: linear-gradient(to bottom, white, white);
+    -webkit-border-radius: 7;
+    -moz-border-radius: 7;
+    border-radius: 7px;
+    font-family: Arial;
+    color: yellowgreen;
+    font-size: 19px;
+    padding: 10px 20px 10px 20px;
+    border: solid yellowgreen 2px;
+    text-decoration: none;
+}
+
+    .btn:hover {
+        background: yellowgreen;
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn:active {
+        background: yellowgreen;
+        color: blueviolet;
+        text-decoration: none;
+    }
+
+#nav-buttons {
+    margin: 0 auto;
+    width: 1340px;
+    height: 40px;
+    text-align: center;
 }
