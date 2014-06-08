@@ -51,10 +51,10 @@
     -webkit-border-radius: 7;
     -moz-border-radius: 7;
     border-radius: 7px;
-    font-family: Arial;
+    font-family: 'Segoe UI';
     color: yellowgreen;
     font-size: 19px;
-    padding: 10px 20px 10px 20px;
+    padding: 5px 20px 5px 20px;
     border: solid yellowgreen 2px;
     text-decoration: none;
 }
@@ -72,6 +72,14 @@
     }
 
 #nav-buttons {
+    margin: 0 auto;
+    width: 1340px;
+    height: 40px;
+    text-align: center;
+}
+
+#temp-div{
+    background-color:yellowgreen;
     margin: 0 auto;
     width: 1340px;
     height: 40px;
