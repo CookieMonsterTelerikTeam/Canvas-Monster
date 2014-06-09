@@ -18,7 +18,6 @@ var tool = this;
 this.started = false;
 //Show width value
 changeWidth();
-
 // This is called when you start holding down the mouse button.
 this.mousedown = function (ev) {
     //If Brush Mode Is ON
@@ -166,4 +165,10 @@ function inputPicture() {
 function changeButtonToPressed(btn, condition) {
     btn.style.color = (condition) ? "white" : "yellowgreen";
     btn.style.background = (condition) ? "yellowgreen" : "white";
+}
+
+//Save canvas to the local hard disk without type(must be entered manualy)
+function saveCanvas() {
+    var data = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    window.location.href = data;
 }
