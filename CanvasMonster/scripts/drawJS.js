@@ -1,13 +1,19 @@
 ﻿var canvas, context, tool;
-var onDraw = false;
 var color = 'black';
-var brushWidth = 10;
+var brushWidth = 7;
 var isHelpDivOn = false;
 var isRubberOn = false;
+var isDrawOn = false;
+var isRectangleOn = false;
 var rubberPreviousColor;
+var rx,
+    ry,
+    rh,
+    rw;
 
-canvas = document.getElementById('the-canvas');
-context = canvas.getContext('2d');
+var canvas = document.getElementById('the-canvas');
+var context = canvas.getContext('2d');
+
 
 // Attach the mousedown, mousemove and mouseup event listeners.
 canvas.addEventListener('mousedown', ev_canvas, false);
@@ -21,30 +27,75 @@ changeWidth();
 // This is called when you start holding down the mouse button.
 this.mousedown = function (ev) {
     //If Brush Mode Is ON
-    if (onDraw === true) {
+    if (isDrawOn === true) {
         context.beginPath();
         context.moveTo(ev._x, ev._y);
         tool.started = true;
     }
 
+    //If Rectangle Mode is ON
+    if (isRectangleOn === true) {
+        tool.started = true;
+        tool.x0 = ev._x;
+        tool.y0 = ev._y;
+    }
 };
 
 this.mousemove = function (ev) {
     if (tool.started) {
-        context.save();
-        context.lineTo(ev._x, ev._y);
-        context.lineWidth = brushWidth;
-        context.strokeStyle = color;
-        context.lineCap = 'round';
-        context.stroke();
-        context.restore();
+        if (isDrawOn === true) {
+            context.save();
+            context.lineTo(ev._x, ev._y);
+            context.lineWidth = brushWidth;
+            context.strokeStyle = color;
+            context.lineCap = 'round';
+            context.stroke();
+            context.restore();
+        }
     }
+    
+
+    //If Rectangle Mode is ON
+    if (isRectangleOn === true) {
+        if (!tool.started) {
+                return;
+        }
+
+          rx = Math.min(ev._x, tool.x0),
+          ry = Math.min(ev._y, tool.y0),
+          rw = Math.abs(ev._x - tool.x0),
+          rh = Math.abs(ev._y - tool.y0);
+
+        if (!rw || !rh) {
+            return;
+        }
+
+        context.rect(rx, ry, rw, rh);
+        context.fillStyle = color;
+        context.fill();
+    }
+
 };
 
 this.mouseup = function (ev) {
     if (tool.started) {
-        tool.mousemove(ev);
-        tool.started = false;
+        if (isDrawOn === true) {
+            tool.mousemove(ev);
+            tool.started = false;
+        }
+
+        //If Rectangle Mode is ON
+        if (isRectangleOn === true) {
+            context.beginPath();
+            context.rect(rx, ry, rw, rh);
+            context.fillStyle = color;
+            context.fill();
+            //context.strokeStyle = 'black';
+            //context.stroke();
+            //context.strokeRect(rx, ry, rw, rh);
+            //tool.mousemove(ev);
+            tool.started = false;
+        }
     }
 };
 
@@ -70,21 +121,34 @@ function ev_canvas(ev) {
 
 //Switch on/off brush mode
 function toggleDraw() {
-    onDraw = !onDraw;
-    var btn = document.getElementById('brush');
-    document.body.style.cursor = (onDraw) ? 'crosshair' : 'default';
-    changeButtonToPressed(btn, onDraw);
+    var btn = document.getElementById('brush-btn');
+   
+
+    isDrawOn = !isDrawOn;
+    changeButtonToPressed(btn, isDrawOn);
+    document.body.style.cursor = (isDrawOn) ? 'crosshair' : 'default';
+}
+
+function toggleRectangle() {
+    var btn = document.getElementById('rect-btn');
+    isRectangleOn = !isRectangleOn;
+    changeButtonToPressed(btn, isRectangleOn);
+    document.body.style.cursor = (isRectangleOn) ? 'crosshair' : 'default';
 }
 
 //TODO - Rubber Mode (when on 1) gets the old color 2) sets the main color to white;  when off puts the old color back)
 function toggleRubber() {
-    if (isRubberOn = false) {
+    var btn = document.getElementById('rubber');
+
+    if (isRubberOn === false) {
         rubberPreviousColor = document.getElementById('color-button').value;
-        document.getElementById('color-button').value = 'white';
+        color = 'white';
         isRubberOn = true;
+        changeButtonToPressed(btn, isRubberOn);
     } else {
-        document.getElementById('color-button').value = rubberPreviousColor;
+        color = rubberPreviousColor;
         isRubberOn = false;
+        changeButtonToPressed(btn, isRubberOn);
     }
 }
 
@@ -171,4 +235,12 @@ function changeButtonToPressed(btn, condition) {
 function saveCanvas() {
     var data = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     window.location.href = data;
+}
+
+// This function draws the #imageTemp canvas on top of #imageView, after which 
+// #imageTemp is cleared. This function is called each time when the user 
+// completes a drawing operation.
+function img_update() {
+    //context.drawImage(canvas, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 }
