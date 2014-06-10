@@ -75,6 +75,7 @@ this.mousemove = function (ev) {
             context.moveTo(tool.x0, tool.y0);
             context.lineWidth = brushWidth;
             context.strokeStyle = color;
+            context.lineCap = 'round';
             context.lineTo(ev._x, ev._y);
             context.stroke();
             context.closePath();
@@ -125,11 +126,11 @@ this.mouseup = function (ev) {
 };
 
 this.onmouseout = function (ev) {
-            if (tool.started) {
-                tool.mousemove(ev);
-                tool.started = false;
-            }
-        };
+    if (tool.started) {
+        tool.mousemove(ev);
+        tool.started = false;
+    }
+};
 
 // The general-purpose event handler. This function just determines the mouse 
 // position relative to the canvas element.
@@ -150,45 +151,42 @@ function ev_canvas(ev) {
     }
 }
 
-//Switch on/off brush mode
-function toggleDraw() {
-    var btn = document.getElementById('brush-btn');
+function changeDrawingTool(obj) {
+    var currentButton = document.getElementById(obj.id);
 
-    isBrushOn = !isBrushOn;
-    changeButtonToPressed(btn, isBrushOn);
-    document.body.style.cursor = (isBrushOn) ? 'crosshair' : 'default';
-}
-
-function toggleLine() {
-    var btn = document.getElementById('line-btn');
-
-    isLineOn = !isLineOn;
-    changeButtonToPressed(btn, isLineOn);
-    document.body.style.cursor = (isLineOn) ? 'crosshair' : 'default';
-}
-
-function toggleRectangle() {
-    var btn = document.getElementById('rect-btn');
-
-    isRectangleOn = !isRectangleOn;
-    changeButtonToPressed(btn, isRectangleOn);
-    document.body.style.cursor = (isRectangleOn) ? 'crosshair' : 'default';
-}
-
-//TODO - Rubber Mode (when on 1) gets the old color 2) sets the main color to white;  when off puts the old color back)
-function toggleRubber() {
-    var btn = document.getElementById('rubber-btn');
-
-    if (isRubberOn === false) {
-        rubberPreviousColor = document.getElementById('color-btn').value;
-        color = 'white';
-        isRubberOn = true;
-        changeButtonToPressed(btn, isRubberOn);
+    switch (obj.id) {
+        case 'brush-btn':
+            isBrushOn = isToolSelected(isBrushOn);
+            changeAppearanceOfButton(currentButton, isBrushOn);
+            break;
+        case 'line-btn':
+            isLineOn = isToolSelected(isLineOn);
+            changeAppearanceOfButton(currentButton, isLineOn);
+            break;
+        case 'rubber-btn':
+            isRubberOn = isToolSelected(isRubberOn);
+            changeAppearanceOfButton(currentButton, isRubberOn);
+            break;
+        case 'rect-btn':
+            isRectangleOn = isToolSelected(isRectangleOn);
+            changeAppearanceOfButton(currentButton, isRectangleOn);
+            break;
     }
-    else {
-        color = rubberPreviousColor;
-        isRubberOn = false;
-        changeButtonToPressed(btn, isRubberOn);
+
+    function isToolSelected(tool) {
+        if (tool === true) {
+            tool = false;
+        }
+        else {
+            tool = true;
+        }
+        return tool;
+    }
+
+    function changeAppearanceOfButton(btn, condition) {
+        btn.style.color = (condition) ? "white" : "yellowgreen";
+        btn.style.background = (condition) ? "yellowgreen" : "white";
+        document.body.style.cursor = (condition) ? 'crosshair' : 'default';
     }
 }
 

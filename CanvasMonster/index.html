@@ -19,10 +19,11 @@
     </div>
 
     <div id="nav-buttons">
-        <button class="btn" id="brush-btn" onclick="toggleDraw()">Brush</button>
-        <button class="btn" id="line-btn" onclick="toggleLine()">Line</button>
-        <button class="btn" id="rubber-btn" onclick="toggleRubber()">Rubber</button>
-        <button class="btn" id="rect-btn" onclick="toggleRectangle()">Rectangle</button>
+        <button class="btn" id="brush-btn" onclick="changeDrawingTool(this)">Brush</button>
+        <button class="btn" id="line-btn" onclick="changeDrawingTool(this)">Line</button>
+        <button class="btn" id="rubber-btn" onclick="changeDrawingTool(this)">Rubber</button>
+        <button class="btn" id="rect-btn" onclick="changeDrawingTool(this)">Rectangle</button>
+
         <button class="btn" id="clear-btn" onclick="clearCanvas()">Clear</button>
         <button class="btn" id="image-input" onclick="showImageInput()">Image</button>
         <button class="btn" id="save-btn" onclick="saveCanvas()">Save</button>
