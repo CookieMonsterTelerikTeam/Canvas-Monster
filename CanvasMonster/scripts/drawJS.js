@@ -178,6 +178,9 @@ function changeDrawingTool(obj) {
             tool = false;
         }
         else {
+            deselectAllTools();
+            deselectAllButtons();
+
             tool = true;
         }
         return tool;
@@ -187,6 +190,21 @@ function changeDrawingTool(obj) {
         btn.style.color = (condition) ? "white" : "yellowgreen";
         btn.style.background = (condition) ? "yellowgreen" : "white";
         document.body.style.cursor = (condition) ? 'crosshair' : 'default';
+    }
+
+    function deselectAllTools() {
+        isBrushOn = false;
+        isLineOn = false;
+        isRubberOn = false;
+        isRectangleOn = false;
+    }
+
+    function deselectAllButtons() {
+        var allButtons = document.querySelectorAll('#nav-buttons .tool');
+
+        for (var i = 0; i < allButtons.length; i++) {
+            changeAppearanceOfButton(allButtons[i], false);
+        }
     }
 }
 
@@ -263,11 +281,6 @@ function inputPicture() {
     var btn = document.getElementById('image-input');
     isHelpDivOn = false;
     changeButtonToPressed(btn, isHelpDivOn);
-}
-
-function changeButtonToPressed(btn, condition) {
-    btn.style.color = (condition) ? "white" : "yellowgreen";
-    btn.style.background = (condition) ? "yellowgreen" : "white";
 }
 
 //Save canvas to the local hard disk without type(must be entered manualy)
