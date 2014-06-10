@@ -1,8 +1,8 @@
 ﻿var canvasView, contextView, canvas, context, tool;
 var color = 'black';
-var brushWidth = 7;
+var brushWidth = document.getElementById('width-slider').value;
 var isRubberOn = false;
-var inPencilOn = false;
+var isPencilOn = false;
 var isRectangleOn = false;
 var rubberPreviousColor;
 var rx,
@@ -36,7 +36,7 @@ changeWidth();
 // This is called when you start holding down the mouse button.
 this.mousedown = function (ev) {
     //If Brush Mode Is ON
-    if (inPencilOn === true) {
+    if (isPencilOn === true) {
         context.beginPath();
         context.moveTo(ev._x, ev._y);
         tool.started = true;
@@ -52,8 +52,8 @@ this.mousedown = function (ev) {
 
 this.mousemove = function (ev) {
     if (tool.started) {
-        if (inPencilOn === true) {
-            context.save();
+        if (isPencilOn === true) {
+            //context.save();
             context.lineTo(ev._x, ev._y);
             context.lineWidth = brushWidth;
             context.strokeStyle = color;
@@ -78,7 +78,6 @@ this.mousemove = function (ev) {
 
             context.lineWidth = brushWidth;
             context.strokeStyle = color;
-            context.stroke();
             context.strokeRect(rx, ry, rw, rh);
         }
     }
@@ -86,7 +85,7 @@ this.mousemove = function (ev) {
 
 this.mouseup = function (ev) {
             if (tool.started) {
-                if (inPencilOn === true) {
+                if (isPencilOn === true) {
                     tool.mousemove(ev);
                     tool.started = false;
                     img_update();
@@ -131,9 +130,9 @@ function ev_canvas(ev) {
 function toggleDraw() {
     var btn = document.getElementById('brush-btn');
 
-    inPencilOn = !inPencilOn;
-    changeButtonToPressed(btn, inPencilOn);
-    document.body.style.cursor = (inPencilOn) ? 'crosshair' : 'default';
+    isPencilOn = !isPencilOn;
+    changeButtonToPressed(btn, isPencilOn);
+    document.body.style.cursor = (isPencilOn) ? 'crosshair' : 'default';
 }
 
 function toggleRectangle() {
@@ -174,6 +173,7 @@ function changeWidth() {
 
 //Clear canvas
 function clearCanvas() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
     contextView.clearRect(0, 0, canvas.width, canvas.height);
 }
 
