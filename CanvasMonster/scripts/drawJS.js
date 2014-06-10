@@ -1,9 +1,8 @@
-﻿var canvas, context, tool;
+﻿var canvasView, contextView, canvas, context, tool;
 var color = 'black';
 var brushWidth = 7;
-var isHelpDivOn = false;
 var isRubberOn = false;
-var isDrawOn = false;
+var inPencilOn = false;
 var isRectangleOn = false;
 var rubberPreviousColor;
 var rx,
@@ -11,9 +10,18 @@ var rx,
     rh,
     rw;
 
-var canvas = document.getElementById('the-canvas');
-var context = canvas.getContext('2d');
+canvasView = document.getElementById('canvasView');
+contextView = canvasView.getContext('2d');
 
+var container = canvasView.parentNode;
+canvas = document.createElement('canvas');
+
+canvas.id = 'canvasTemp';
+canvas.width = canvasView.width;
+canvas.height = canvasView.height;
+container.appendChild(canvas);
+
+context = canvas.getContext('2d');
 
 // Attach the mousedown, mousemove and mouseup event listeners.
 canvas.addEventListener('mousedown', ev_canvas, false);
@@ -24,10 +32,11 @@ var tool = this;
 this.started = false;
 //Show width value
 changeWidth();
+
 // This is called when you start holding down the mouse button.
 this.mousedown = function (ev) {
     //If Brush Mode Is ON
-    if (isDrawOn === true) {
+    if (inPencilOn === true) {
         context.beginPath();
         context.moveTo(ev._x, ev._y);
         tool.started = true;
@@ -43,7 +52,7 @@ this.mousedown = function (ev) {
 
 this.mousemove = function (ev) {
     if (tool.started) {
-        if (isDrawOn === true) {
+        if (inPencilOn === true) {
             context.save();
             context.lineTo(ev._x, ev._y);
             context.lineWidth = brushWidth;
@@ -52,66 +61,65 @@ this.mousemove = function (ev) {
             context.stroke();
             context.restore();
         }
-    }
-    
-
-    //If Rectangle Mode is ON
-    if (isRectangleOn === true) {
-        if (!tool.started) {
-                return;
-        }
-
-          rx = Math.min(ev._x, tool.x0),
-          ry = Math.min(ev._y, tool.y0),
-          rw = Math.abs(ev._x - tool.x0),
-          rh = Math.abs(ev._y - tool.y0);
-
-        if (!rw || !rh) {
-            return;
-        }
-
-        context.rect(rx, ry, rw, rh);
-        context.fillStyle = color;
-        context.fill();
-    }
-
-};
-
-this.mouseup = function (ev) {
-    if (tool.started) {
-        if (isDrawOn === true) {
-            tool.mousemove(ev);
-            tool.started = false;
-        }
 
         //If Rectangle Mode is ON
         if (isRectangleOn === true) {
-            context.beginPath();
-            context.rect(rx, ry, rw, rh);
-            context.fillStyle = color;
-            context.fill();
-            //context.strokeStyle = 'black';
-            //context.stroke();
-            //context.strokeRect(rx, ry, rw, rh);
-            //tool.mousemove(ev);
-            tool.started = false;
+
+            rx = Math.min(ev._x, tool.x0),
+            ry = Math.min(ev._y, tool.y0),
+            rw = Math.abs(ev._x - tool.x0),
+            rh = Math.abs(ev._y - tool.y0);
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!rw || !rh) {
+                return;
+            }
+
+            context.lineWidth = brushWidth;
+            context.strokeStyle = color;
+            context.stroke();
+            context.strokeRect(rx, ry, rw, rh);
         }
     }
 };
 
+this.mouseup = function (ev) {
+            if (tool.started) {
+                if (inPencilOn === true) {
+                    tool.mousemove(ev);
+                    tool.started = false;
+                    img_update();
+                }
+
+                //If Rectangle Mode is ON
+                if (isRectangleOn === true) {
+                    tool.mousemove(ev);
+                    tool.started = false;
+                    img_update();
+                }
+            }
+        };
+
 this.onmouseout = function (ev) {
-    if (tool.started) {
-        tool.mousemove(ev);
-        tool.started = false;
-    }
-};
+            if (tool.started) {
+                tool.mousemove(ev);
+                tool.started = false;
+            }
+        };
 
 // The general-purpose event handler. This function just determines the mouse 
 // position relative to the canvas element.
 function ev_canvas(ev) {
-    ev._x = ev.offsetX;
-    ev._y = ev.offsetY;
-
+    if (ev.offsetX || ev.offsetX == 0) { // Opera
+        ev._x = ev.offsetX;
+        ev._y = ev.offsetY;
+    }
+    else if (ev.layerX || ev.layerX == 0) { // Firefox
+        ev._x = ev.layerX;
+        ev._y = ev.layerY;
+    }
+    
     // Call the event handler of the tool.
     var func = tool[ev.type];
     if (func) {
@@ -122,15 +130,15 @@ function ev_canvas(ev) {
 //Switch on/off brush mode
 function toggleDraw() {
     var btn = document.getElementById('brush-btn');
-   
 
-    isDrawOn = !isDrawOn;
-    changeButtonToPressed(btn, isDrawOn);
-    document.body.style.cursor = (isDrawOn) ? 'crosshair' : 'default';
+    inPencilOn = !inPencilOn;
+    changeButtonToPressed(btn, inPencilOn);
+    document.body.style.cursor = (inPencilOn) ? 'crosshair' : 'default';
 }
 
 function toggleRectangle() {
     var btn = document.getElementById('rect-btn');
+
     isRectangleOn = !isRectangleOn;
     changeButtonToPressed(btn, isRectangleOn);
     document.body.style.cursor = (isRectangleOn) ? 'crosshair' : 'default';
@@ -145,7 +153,8 @@ function toggleRubber() {
         color = 'white';
         isRubberOn = true;
         changeButtonToPressed(btn, isRubberOn);
-    } else {
+    }
+    else {
         color = rubberPreviousColor;
         isRubberOn = false;
         changeButtonToPressed(btn, isRubberOn);
@@ -165,9 +174,8 @@ function changeWidth() {
 
 //Clear canvas
 function clearCanvas() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    contextView.clearRect(0, 0, canvas.width, canvas.height);
 }
-
 
 //Adds to the DOM help div to enter the url of the image. 
 function showImageInput() {
@@ -179,8 +187,8 @@ function showImageInput() {
     if (!isHelpDivOn) {
         div.id = 'temp-div';
         div.innerHTML = '<label for="img-url-input" style="font-size:19px; color:white;">Enter URL of the image here: </label>\
-        <input type="text" id="img-url-input" style="width:300px; height:25px"/>\
-        <button class="btn" id="img-url" onclick="inputPicture()">Input</button>';
+<input type="text" id="img-url-input" style="width:300px; height:25px"/>\
+<button class="btn" id="img-url" onclick="inputPicture()">Input</button>';
 
         parent.parentNode.insertBefore(div, parent.nextSibling);
     }
@@ -209,7 +217,8 @@ function inputPicture() {
                 height = canvas.height;
             }
             context.drawImage(image, 0, 0, width, height);
-        } else {
+        }
+        else {
             context.drawImage(image, 0, 0);
         }
 
@@ -237,10 +246,7 @@ function saveCanvas() {
     window.location.href = data;
 }
 
-// This function draws the #imageTemp canvas on top of #imageView, after which 
-// #imageTemp is cleared. This function is called each time when the user 
-// completes a drawing operation.
 function img_update() {
-    //context.drawImage(canvas, 0, 0);
+    contextView.drawImage(canvas, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
 }

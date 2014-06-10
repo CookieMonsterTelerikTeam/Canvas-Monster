@@ -6,6 +6,7 @@ F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\ob
 F:\Telerik Academy\Javascript UI and DOM\TeamWOrk\CanvasMonster\CanvasMonster\obj\Debug\CanvasMonster.pdb
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.dll
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.pdb
-D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.csprojResolveAssemblyReference.cache
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.dll
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.pdb
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.dll.CodeAnalysisLog.xml
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.dll.lastcodeanalysissucceeded
