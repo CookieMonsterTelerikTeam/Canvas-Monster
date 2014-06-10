@@ -1,8 +1,9 @@
 ﻿var canvasView, contextView, canvas, context, tool;
 var color = 'black';
 var brushWidth = document.getElementById('width-slider').value;
+var isBrushOn = false;
+var isLineOn = false;
 var isRubberOn = false;
-var isPencilOn = false;
 var isRectangleOn = false;
 var rubberPreviousColor;
 var rx,
@@ -36,10 +37,16 @@ changeWidth();
 // This is called when you start holding down the mouse button.
 this.mousedown = function (ev) {
     //If Brush Mode Is ON
-    if (isPencilOn === true) {
+    if (isBrushOn === true) {
         context.beginPath();
         context.moveTo(ev._x, ev._y);
         tool.started = true;
+    }
+
+    if (isLineOn === true) {
+        tool.started = true;
+        tool.x0 = ev._x;
+        tool.y0 = ev._y;
     }
 
     //If Rectangle Mode is ON
@@ -52,14 +59,25 @@ this.mousedown = function (ev) {
 
 this.mousemove = function (ev) {
     if (tool.started) {
-        if (isPencilOn === true) {
-            //context.save();
+        if (isBrushOn === true) {
             context.lineTo(ev._x, ev._y);
             context.lineWidth = brushWidth;
             context.strokeStyle = color;
             context.lineCap = 'round';
             context.stroke();
             context.restore();
+        }
+
+        if (isLineOn === true) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.beginPath();
+            context.moveTo(tool.x0, tool.y0);
+            context.lineWidth = brushWidth;
+            context.strokeStyle = color;
+            context.lineTo(ev._x, ev._y);
+            context.stroke();
+            context.closePath();
         }
 
         //If Rectangle Mode is ON
@@ -84,21 +102,27 @@ this.mousemove = function (ev) {
 };
 
 this.mouseup = function (ev) {
-            if (tool.started) {
-                if (isPencilOn === true) {
-                    tool.mousemove(ev);
-                    tool.started = false;
-                    img_update();
-                }
+    if (tool.started) {
+        if (isBrushOn === true) {
+            tool.mousemove(ev);
+            tool.started = false;
+            img_update();
+        }
 
-                //If Rectangle Mode is ON
-                if (isRectangleOn === true) {
-                    tool.mousemove(ev);
-                    tool.started = false;
-                    img_update();
-                }
-            }
-        };
+        if (isLineOn === true) {
+            tool.mousemove(ev);
+            tool.started = false;
+            img_update();
+        }
+
+        //If Rectangle Mode is ON
+        if (isRectangleOn === true) {
+            tool.mousemove(ev);
+            tool.started = false;
+            img_update();
+        }
+    }
+};
 
 this.onmouseout = function (ev) {
             if (tool.started) {
@@ -130,9 +154,17 @@ function ev_canvas(ev) {
 function toggleDraw() {
     var btn = document.getElementById('brush-btn');
 
-    isPencilOn = !isPencilOn;
-    changeButtonToPressed(btn, isPencilOn);
-    document.body.style.cursor = (isPencilOn) ? 'crosshair' : 'default';
+    isBrushOn = !isBrushOn;
+    changeButtonToPressed(btn, isBrushOn);
+    document.body.style.cursor = (isBrushOn) ? 'crosshair' : 'default';
+}
+
+function toggleLine() {
+    var btn = document.getElementById('line-btn');
+
+    isLineOn = !isLineOn;
+    changeButtonToPressed(btn, isLineOn);
+    document.body.style.cursor = (isLineOn) ? 'crosshair' : 'default';
 }
 
 function toggleRectangle() {
@@ -145,10 +177,10 @@ function toggleRectangle() {
 
 //TODO - Rubber Mode (when on 1) gets the old color 2) sets the main color to white;  when off puts the old color back)
 function toggleRubber() {
-    var btn = document.getElementById('rubber');
+    var btn = document.getElementById('rubber-btn');
 
     if (isRubberOn === false) {
-        rubberPreviousColor = document.getElementById('color-button').value;
+        rubberPreviousColor = document.getElementById('color-btn').value;
         color = 'white';
         isRubberOn = true;
         changeButtonToPressed(btn, isRubberOn);
@@ -162,7 +194,7 @@ function toggleRubber() {
 
 //Change current color
 function changeColor() {
-    color = document.getElementById('color-button').value;
+    color = document.getElementById('color-btn').value;
 }
 
 //Change brush width
