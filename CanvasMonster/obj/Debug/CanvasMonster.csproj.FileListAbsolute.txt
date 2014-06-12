@@ -9,3 +9,9 @@ D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.pdb
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.dll
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.pdb
 D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.csprojResolveAssemblyReference.cache
+X:\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.dll.config
+X:\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.dll
+X:\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.pdb
+X:\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.csprojResolveAssemblyReference.cache
+X:\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.dll
+X:\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.pdb

@@ -5,11 +5,15 @@ var isBrushOn = false;
 var isLineOn = false;
 var isRubberOn = false;
 var isRectangleOn = false;
+var isCircleOn = false;
 var rubberPreviousColor;
 var rx,
     ry,
     rh,
-    rw;
+    rw,
+    cx,
+    cy,
+    radii;
 
 canvasView = document.getElementById('canvasView');
 contextView = canvasView.getContext('2d');
@@ -51,6 +55,12 @@ this.mousedown = function (ev) {
 
     //If Rectangle Mode is ON
     if (isRectangleOn === true) {
+        tool.started = true;
+        tool.x0 = ev._x;
+        tool.y0 = ev._y;
+    }
+    //If Circle Mode is ON
+    if (isCircleOn === true) {
         tool.started = true;
         tool.x0 = ev._x;
         tool.y0 = ev._y;
@@ -99,6 +109,31 @@ this.mousemove = function (ev) {
             context.strokeStyle = color;
             context.strokeRect(rx, ry, rw, rh);
         }
+        //If Circle Mode is ON
+        if (isCircleOn === true) {
+
+            rx = Math.min(ev._x, tool.x0);
+            ry = Math.min(ev._y, tool.y0);
+            rw = Math.abs(ev._x - tool.x0);
+            rh = Math.abs(ev._y - tool.y0);
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!rw || !rh) {
+                return;
+            }
+
+            cx = rx + parseInt(rw / 2);
+            cy = ry + parseInt(rh / 2);
+            radii = parseInt(rw / 2);
+
+            context.lineWidth = brushWidth;
+            context.strokeStyle = color;
+            context.moveTo(cx, cy);
+            context.beginPath();
+            context.arc(cx, cy, radii, 0, 2 * Math.PI);
+            context.stroke();
+        }
     }
 };
 
@@ -118,6 +153,13 @@ this.mouseup = function (ev) {
 
         //If Rectangle Mode is ON
         if (isRectangleOn === true) {
+            tool.mousemove(ev);
+            tool.started = false;
+            img_update();
+        }
+
+        //If Circle Mode is ON
+        if (isCircleOn === true) {
             tool.mousemove(ev);
             tool.started = false;
             img_update();
@@ -171,6 +213,10 @@ function changeDrawingTool(obj) {
             isRectangleOn = isToolSelected(isRectangleOn);
             changeAppearanceOfButton(currentButton, isRectangleOn);
             break;
+        case 'circle-btn':
+            isCircleOn = isToolSelected(isCircleOn);
+            changeAppearanceOfButton(currentButton, isCircleOn);
+            break;
     }
 
     function isToolSelected(tool) {
@@ -197,6 +243,7 @@ function changeDrawingTool(obj) {
         isLineOn = false;
         isRubberOn = false;
         isRectangleOn = false;
+        isCircleOn = false;
     }
 
     function deselectAllButtons() {
