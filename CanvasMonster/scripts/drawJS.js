@@ -1,19 +1,23 @@
 ﻿var canvasView, contextView, canvas, context, tool;
-var color = 'black';
-var brushWidth = document.getElementById('width-slider').value;
-var isBrushOn = false;
-var isLineOn = false;
-var isRubberOn = false;
-var isRectangleOn = false;
-var isCircleOn = false;
-var rubberPreviousColor;
-var rx,
+var color = 'black',
+    brushWidth = document.getElementById('width-slider').value,
+    isBrushOn = false,
+    isRubberOn = false,
+    isLineOn = false,
+    isRubberOn = false,
+    isRectangleOn = false,
+    isCircleOn = false,
+    rubberPreviousColor,
+    rx,
     ry,
     rh,
     rw,
     cx,
     cy,
-    radii;
+    radii,
+    circumference, 
+    scaleX,
+    scaleY;
 
 canvasView = document.getElementById('canvasView');
 contextView = canvasView.getContext('2d');
@@ -41,26 +45,14 @@ changeWidth();
 // This is called when you start holding down the mouse button.
 this.mousedown = function (ev) {
     //If Brush Mode Is ON
-    if (isBrushOn === true) {
+
+    if ((isBrushOn === true) || (isRubberOn === true)) {
         context.beginPath();
         context.moveTo(ev._x, ev._y);
         tool.started = true;
     }
 
-    if (isLineOn === true) {
-        tool.started = true;
-        tool.x0 = ev._x;
-        tool.y0 = ev._y;
-    }
-
-    //If Rectangle Mode is ON
-    if (isRectangleOn === true) {
-        tool.started = true;
-        tool.x0 = ev._x;
-        tool.y0 = ev._y;
-    }
-    //If Circle Mode is ON
-    if (isCircleOn === true) {
+    if ((isLineOn === true) || (isRectangleOn === true) || (isCircleOn === true)) {
         tool.started = true;
         tool.x0 = ev._x;
         tool.y0 = ev._y;
@@ -69,10 +61,20 @@ this.mousedown = function (ev) {
 
 this.mousemove = function (ev) {
     if (tool.started) {
+
+        context.lineWidth = brushWidth;
+        context.strokeStyle = color;
+
+        if (isRubberOn === true) {
+            context.lineTo(ev._x, ev._y);
+            context.strokeStyle = '#FFF';
+            context.lineCap = 'round';
+            context.stroke();
+            context.restore();
+        }
+
         if (isBrushOn === true) {
             context.lineTo(ev._x, ev._y);
-            context.lineWidth = brushWidth;
-            context.strokeStyle = color;
             context.lineCap = 'round';
             context.stroke();
             context.restore();
@@ -83,8 +85,6 @@ this.mousemove = function (ev) {
 
             context.beginPath();
             context.moveTo(tool.x0, tool.y0);
-            context.lineWidth = brushWidth;
-            context.strokeStyle = color;
             context.lineCap = 'round';
             context.lineTo(ev._x, ev._y);
             context.stroke();
@@ -105,10 +105,9 @@ this.mousemove = function (ev) {
                 return;
             }
 
-            context.lineWidth = brushWidth;
-            context.strokeStyle = color;
             context.strokeRect(rx, ry, rw, rh);
         }
+
         //If Circle Mode is ON
         if (isCircleOn === true) {
 
@@ -125,14 +124,18 @@ this.mousemove = function (ev) {
 
             cx = rx + parseInt(rw / 2);
             cy = ry + parseInt(rh / 2);
-            radii = parseInt(rw / 2);
+            circumference = Math.min(rw, rh);
+            radii = parseInt(circumference / 2);
+            scaleX = rw / circumference;
+            scaleY = rh / circumference;
 
-            context.lineWidth = brushWidth;
-            context.strokeStyle = color;
+            context.save();
             context.moveTo(cx, cy);
             context.beginPath();
+            //context.scale(scaleX, scaleY);
             context.arc(cx, cy, radii, 0, 2 * Math.PI);
             context.stroke();
+            context.restore();
         }
     }
 };
@@ -144,7 +147,11 @@ this.mouseup = function (ev) {
             tool.started = false;
             img_update();
         }
-
+        if (isRubberOn === true) {
+            tool.mousemove(ev);
+            tool.started = false;
+            img_update();
+        }
         if (isLineOn === true) {
             tool.mousemove(ev);
             tool.started = false;
