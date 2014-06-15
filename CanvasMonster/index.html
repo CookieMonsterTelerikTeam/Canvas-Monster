@@ -3,23 +3,26 @@
 <head>
     <title>Canvas Monster</title>
     <link href="styles/style.css" rel="stylesheet" />
+    <script src="libs/kinetic-v5.1.0.min.js"></script>
 </head>
 <body>
     <div id="nav-bar">
         <a id="nav-git-link" href="https://github.com/CookieMonsterTelerikTeam/Canvas-Monster">Canvas Monster</a>
     </div>
-    <div id="animation-add">
-    </div>
-    <div id="canvas-container">
-        <canvas id="canvasView" width="1300" height="700">
-            Unfortunately, your browser is currently unsupported by our web
-            application.  We are sorry for the inconvenience. Please use one of the
-            supported browsers listed below, or draw the image you want using an
-            off-line tool.
-            Supported browsers: Opera, Firefox, Safari, and Konqueror.
-        </canvas>
-    </div>
 
+    <div class="center">
+        <div id="animation-left"></div>
+        <div id="canvas-container">
+            <canvas id="canvasView" width="1300" height="700">
+                Unfortunately, your browser is currently unsupported by our web
+                application.  We are sorry for the inconvenience. Please use one of the
+                supported browsers listed below, or draw the image you want using an
+                off-line tool.
+                Supported browsers: Opera, Firefox, Safari, and Konqueror.
+            </canvas>
+        </div>
+        <div id="animation-rigth"></div>
+    </div>
 
     <div id="nav-buttons">
         <button class="btn tool" id="brush-btn" onclick="changeDrawingTool(this)">Brush</button>
@@ -41,9 +44,7 @@
         <input id="width-value" type="text" disabled="disabled" />
     </div>
 
-    <script src="scripts/drawJS.js"></script>
-    <script src="libraries/kinetic-v5.1.0.min.js"></script>
-    <script src="scripts/playAdd.js"></script>
-
+    <script src="scripts/draw.js"></script>   
+    <script src="scripts/animations.js"></script>
 </body>
 </html>

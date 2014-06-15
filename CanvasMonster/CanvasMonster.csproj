@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0BEE661F-C1D3-4479-A35A-27F1E9F1D5D7}</ProjectGuid>
+    <ProjectGuid>{1714D94D-8642-41D2-AB1D-AD8D21F643B9}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -65,10 +65,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scripts\Drawer.js" />
-    <Content Include="scripts\drawJS.js" />
+    <Content Include="scripts\draw.js" />
     <Content Include="index.html" />
-    <Content Include="libraries\kinetic-v5.1.0.min.js" />
+    <Content Include="libs\kinetic-v5.1.0.min.js" />
+    <Content Include="scripts\animations.js" />
     <Content Include="styles\style.css" />
     <Content Include="Web.config" />
   </ItemGroup>

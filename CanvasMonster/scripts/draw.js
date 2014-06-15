@@ -15,7 +15,7 @@ var color = 'black',
     cx,
     cy,
     radii,
-    circumference, 
+    circumference,
     scaleX,
     scaleY;
 
@@ -192,7 +192,7 @@ function ev_canvas(ev) {
         ev._x = ev.layerX;
         ev._y = ev.layerY;
     }
-    
+
     // Call the event handler of the tool.
     var func = tool[ev.type];
     if (func) {
