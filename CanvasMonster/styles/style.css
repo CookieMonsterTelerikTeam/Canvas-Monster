@@ -26,9 +26,6 @@
 
 #animation-left {
     display: inline-block;
-    /*position: absolute;
-    top: 110px;
-    left: 10px;*/
     width: 150px;
     height: 700px;
     border: solid yellowgreen 2px;
@@ -37,9 +34,6 @@
 
 #animation-rigth {
     display: inline-block;
-    /*position: absolute;
-    top: 110px;
-    right: 10px;*/
     width: 150px;
     height: 700px;
     border: solid yellowgreen 2px;
