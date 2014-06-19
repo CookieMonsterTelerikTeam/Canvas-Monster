@@ -2,3 +2,8 @@ D:\My Documents\Telerik\JS_Part_II\Teamework\Canvas-Monster\CanvasMonster\bin\Ca
 D:\My Documents\Telerik\JS_Part_II\Teamework\Canvas-Monster\CanvasMonster\bin\CanvasMonster.pdb
 D:\My Documents\Telerik\JS_Part_II\Teamework\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.dll
 D:\My Documents\Telerik\JS_Part_II\Teamework\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.pdb
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.dll
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\bin\CanvasMonster.pdb
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.csprojResolveAssemblyReference.cache
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.dll
+D:\My Documents\GitHub\Canvas-Monster\CanvasMonster\obj\Debug\CanvasMonster.pdb
